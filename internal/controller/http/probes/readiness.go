@@ -7,6 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Readiness probe
+// @Summary      Liveness probe
+// @Description  Liveness probe
+// @Tags         probe
+// @Produce      json
+// @Success      200
+// @Router       /healthz/ready [get]
 func NewReadinessProbe(ctx context.Context) gin.HandlerFunc {
 	return func(c *gin.Context) {
 

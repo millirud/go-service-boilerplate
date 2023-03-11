@@ -7,3 +7,6 @@ linter-hadolint: ### check by hadolint linter
 
 linter: ### check by all linters
 	golangci-lint run && hadolint Dockerfile
+
+swag-init: ### init swagger docs
+	swag init -q --parseDependency --parseInternal -g cmd/app/main.go

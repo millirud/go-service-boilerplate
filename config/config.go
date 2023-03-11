@@ -16,8 +16,9 @@ type (
 
 	// App -.
 	App struct {
-		Name    string `env-required:"true" yaml:"app_name"`
-		Version string `env-required:"true" yaml:"app_version"`
+		Name        string `env-required:"true" yaml:"app_name"`
+		Description string `env-required:"true" yaml:"app_description"`
+		Version     string `env-required:"true" yaml:"app_version"`
 	}
 
 	// HTTP -.
