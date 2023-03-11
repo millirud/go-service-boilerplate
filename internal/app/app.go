@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/millirud/go-service-boilerplate/config"
+	"github.com/millirud/go-service-boilerplate/internal/controller/http/middlewares"
 	"github.com/millirud/go-service-boilerplate/internal/controller/http/probes"
 	"github.com/millirud/go-service-boilerplate/pkg/httpserver"
 	"golang.org/x/net/context"
@@ -18,6 +19,7 @@ func Run(cfg *config.Config) {
 	ctx, cancel := context.WithCancel(context.Background())
 
 	handler := gin.New()
+	handler.Use(middlewares.NewLogger(), gin.Recovery())
 
 	handler.GET("/healthz", probes.NewLivenessProbe())
 
@@ -34,7 +36,7 @@ func Run(cfg *config.Config) {
 		fmt.Printf("app - Run - signal: %s /n", s.String())
 	case err = <-httpServer.Notify():
 		cancel()
-		fmt.Println(fmt.Errorf("app - Run - rmqServer.Notify: %w", err))
+		fmt.Println(fmt.Errorf("app - Run - httpServer.Notify: %w", err))
 	}
 
 	// Shutdown
