@@ -14,5 +14,4 @@ RUN go install github.com/cosmtrek/air@v1.29.0 && \
     go install github.com/swaggo/swag/cmd/swag@v1.8.10 && \
     go mod download
 
-# CMD ["air", "-c", ".air.toml"]
-CMD air
+CMD ["air", "-c", ".air.toml"]

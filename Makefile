@@ -1,3 +1,5 @@
+up-dev: ### compose up dev
+	docker-compose up --build --remove-orphans
 
 linter-golangci: ### check by golangci linter
 	golangci-lint run
