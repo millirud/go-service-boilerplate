@@ -9,6 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/millirud/go-service-boilerplate/config"
 	docs "github.com/millirud/go-service-boilerplate/docs"
+	"github.com/millirud/go-service-boilerplate/internal/controller/http/http_metrics"
 	"github.com/millirud/go-service-boilerplate/internal/controller/http/middlewares"
 	"github.com/millirud/go-service-boilerplate/internal/controller/http/probes"
 	"github.com/millirud/go-service-boilerplate/pkg/httpserver"
@@ -33,6 +34,7 @@ func Run(cfg *config.Config) {
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 
 	handler.GET("/healthz/ready", probes.NewReadinessProbe(ctx))
+	handler.GET("/metrics", http_metrics.NewMetrics())
 
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)
