@@ -27,6 +27,7 @@ func Run(cfg *config.Config) {
 	handler.Use(middlewares.NewLogger(), gin.Recovery())
 
 	handler.GET("/healthz", probes.NewLivenessProbe())
+	handler.GET("/metrics", http_metrics.NewMetrics())
 
 	setupSwagger(cfg.App)
 	handler.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -34,7 +35,6 @@ func Run(cfg *config.Config) {
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 
 	handler.GET("/healthz/ready", probes.NewReadinessProbe(ctx))
-	handler.GET("/metrics", http_metrics.NewMetrics())
 
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)
